@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,12 +9,15 @@ import {
   updateBook,
   fetchBookById,
 } from "../libs/services/slices/booksSlice";
+import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
+
 
 const AdminBookForm = () => {
   const dispatch = useDispatch();
   const { id: bookId } = useParams();
   const navigate = useNavigate();
-
+  const loading = useSelector((state) => state.books.loading); 
+  const error = useSelector((state) => state.books.error); 
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -71,17 +74,19 @@ const AdminBookForm = () => {
   }, [loadBookData]);
 
   const onSubmit = useCallback(
-    (data) => {
-      if (bookId) {
-        dispatch(updateBook({ id: bookId, ...data })).then(() => {
-          reset();
-          navigate("/admin");
-        });
-      } else {
-        dispatch(addBook(data)).then(() => {
-          reset();
-          navigate("/admin");
-        });
+    async (data) => {
+      try {
+        if (bookId) {
+          await dispatch(updateBook({ id: bookId, ...data })).unwrap();
+          showSuccessToast("تم تحديث الكتاب بنجاح!");
+        } else {
+          await dispatch(addBook(data)).unwrap();
+          showSuccessToast("تم إضافة الكتاب بنجاح!");
+        }
+        reset();
+        navigate("/admin");
+      } catch (err) {
+        showErrorToast("حدث خطأ أثناء معالجة الطلب");
       }
     },
     [bookId, dispatch, navigate, reset]

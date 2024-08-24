@@ -1,6 +1,13 @@
 import React, { useState, useMemo, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { filterBooks ,fetchBooks} from "../libs/services/slices/booksSlice";
 
-function FilterComponent({ books, onFilter }) {
+function FilterComponent() {
+  const dispatch = useDispatch();
+  const books = useSelector((state) => state.books.books); 
+
+  const loading = useSelector((state) => state.books.loading); 
+
   const [filterType, setFilterType] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
 
@@ -20,17 +27,18 @@ function FilterComponent({ books, onFilter }) {
 
   const handleValueChange = useCallback(
     (e) => {
-      setSelectedValue(e.target.value);
-      onFilter({ [filterType]: e.target.value });
+      const value = e.target.value;
+      setSelectedValue(value);
+      dispatch(filterBooks({ filterKey: filterType, filterValue: value }));
     },
-    [filterType, onFilter]
+    [filterType, dispatch]
   );
 
   const handleReset = useCallback(() => {
     setFilterType("");
     setSelectedValue("");
-    onFilter({});
-  }, [onFilter]);
+    dispatch(fetchBooks());
+  }, [dispatch]);
 
   return (
     <div className="mb-4 flex justify-start items-center gap-4">
@@ -55,7 +63,7 @@ function FilterComponent({ books, onFilter }) {
           value={selectedValue}
           onChange={handleValueChange}
           className="px-4 border rounded"
-          disabled={!filterType}
+          disabled={!filterType || loading} // تعطيل إذا كان في حالة تحميل
         >
           <option value="">
             اختر {filterType === "author" ? "المؤلف" : "الفئة"}
@@ -78,11 +86,14 @@ function FilterComponent({ books, onFilter }) {
       <button
         onClick={handleReset}
         className="p-2 bg-blue-700 text-white rounded"
+        disabled={loading} // تعطيل الزر إذا كان في حالة تحميل
       >
         إلغاء الفلترة
       </button>
+
     </div>
   );
 }
 
 export default React.memo(FilterComponent);
+

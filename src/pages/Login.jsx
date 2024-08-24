@@ -5,10 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
+
 
 export default function Login() {
   const dispatch = useDispatch();
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
 
   const { user, loading, error } = useSelector((state) => state.auth);
@@ -34,20 +36,25 @@ export default function Login() {
   });
 
 
-  const onSubmitHandler = useCallback(
-    (data) => {
-      
-      dispatch(signinUser(data));
-      reset();
+const onSubmitHandler = useCallback(
+    async (data) => {
+      try {
+        await dispatch(signinUser(data)).unwrap();
+        showSuccessToast("تم تسجيل الدخول بنجاح!")
+        reset();
+        navigate("/");
+      } catch (err) {
+        showErrorToast("حدث خطأ أثناء تسجيل الدخول");
+      }
     },
-    [dispatch, reset]
+    [dispatch, reset, navigate]
   );
 
-  useEffect(() => {
-    if (user) {
-      navigation("/");
-    }
-  }, [user, navigation]);
+//  useEffect(() => {
+//    if (user) {
+//      navigate("/");
+//    }
+//  }, [user, navigate]);
 
   return (
     <div className="bg-white p-4 flex flex-col justify-center items-center">

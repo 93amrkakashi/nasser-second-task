@@ -15,7 +15,7 @@ export default function BookCard({ book }) {
   };
 
   return (
-    <div key={book?.id} className="border rounded-lg shadow bg-white text-text">
+    <div className="border rounded-lg shadow bg-white text-text">
       <div className="h-48 w-full bg-gray-300 text-center flex items-center justify-center">
         <img
           src="../assits/images/books.gif"

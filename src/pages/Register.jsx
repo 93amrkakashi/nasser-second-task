@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -15,7 +16,7 @@ export default function Signup() {
 
   const { user, loading, error } = useSelector((state) => state.auth);
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   
 
   const schema = useMemo(() => {
@@ -36,13 +37,18 @@ export default function Signup() {
   });
 
 
-  const onSubmitHandler = useCallback(
-    (data) => {
-      console.log(data);
-      dispatch(signupUser({ email, password, role: "user" }));
-      reset();
+const onSubmitHandler = useCallback(
+    async (data) => {
+      try {
+        await dispatch(signupUser(data)).unwrap();
+        showSuccessToast("تم انشاء الحساب بنجاح!")
+        reset();
+        navigate("/");
+      } catch (err) {
+        showErrorToast("حدث خطأ أثناء انشائ الحساب!");
+      }
     },
-    [dispatch, reset]
+    [dispatch, reset, navigate]
   );
 
   useEffect(() => {

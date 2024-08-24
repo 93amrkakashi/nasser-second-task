@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
@@ -7,48 +7,38 @@ import { fetchBooks } from "../libs/services/slices/booksSlice";
 
 export default function BooksPage() {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books);
-  const [filter, setFilter] = useState({});
-  const [loading, setLoading] = useState(true);
+  const books = useSelector((state) => state.books.books); 
+
+  const loading = useSelector((state) => state.books.loading); 
+
+
   const location = useLocation();
   const isAdminPage = location.pathname === "/admin";
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      await dispatch(fetchBooks());
-      setLoading(false);
-    };
-
-    fetchData();
+    dispatch(fetchBooks());
   }, [dispatch]);
 
-  const filteredBooks = useMemo(() => {
-    return books?.filter((book) => {
-      let matches = true;
-      if (filter.author) {
-        matches = matches && book.author === filter.author;
-      }
-      if (filter.category) {
-        matches = matches && book.category === filter.category;
-      }
-      return matches;
-    });
-  }, [books, filter]);
+  useEffect(() => {
+    
+  }, [books]);
 
-  const handleFilter = useCallback((filter) => {
-    setFilter(filter);
-  }, []);
+//  const filteredBooks = useMemo(() => {
+//    if (!filter.filterKey || !filter.filterValue) return books;
+//    return books.filter((book) =>
+//      book[filter.filterKey] === filter.filterValue
+//    );
+//  }, [books, filter]);
 
   return (
     <div className="w-full p-4">
-      <FilterComponent books={books} onFilter={handleFilter} />
+      <FilterComponent />
       {loading ? (
         <div className="text-center">يتم تحميل الكتب...</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredBooks.map((book) => (
-            <BookCard key={book.id} book={book} isAdminPage={isAdminPage} />
+          {books.map((book) => (
+            <BookCard key={book.id} book={book} />
           ))}
         </div>
       )}
@@ -63,3 +53,4 @@ export default function BooksPage() {
     </div>
   );
 }
+

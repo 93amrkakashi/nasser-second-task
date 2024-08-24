@@ -6,7 +6,7 @@ function App() {
   return (
     <div dir="rtl" className="App">
       <Navbaar />
-      <div className="mt-[70px] w-full ">
+      <div className="mt-[75px] w-full ">
       <AppRoutes />
       </div>
     </div>

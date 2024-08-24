@@ -10,7 +10,7 @@
     },
     {
       "id": "2",
-      "title": "تيست التعديل",
+      "title": "تيست التعديل 3",
       "author": "عبد الرحمن الشرقاوي",
       "category": "رواية",
       "description": "رواية تسرد قصة صراع الفلاحين المصريين مع الإقطاعيين في فترة الاحتلال البريطاني."
@@ -70,14 +70,6 @@
       "category": "فلسفة",
       "image": "https://st-takla.org/Gallery/var/albums/Books/General-and-Writing/www-St-Takla-org--Books-01.gif?m=1419425451",
       "description": "كتاب يتناول موضوعات فلسفية وعلمية حول الكون والوجود."
-    },
-    {
-      "id": "18",
-      "title": "المشاغب",
-      "author": "صنع الله إبراهيم",
-      "category": "رواية",
-      "image": "https://st-takla.org/Gallery/var/albums/Books/General-and-Writing/www-St-Takla-org--Books-01.gif?m=1419425451",
-      "description": "رواية تسرد قصة شاب يجد نفسه في صراع مع المجتمع الذي يعيش فيه."
     }
   ],
   "users": [
@@ -115,6 +107,12 @@
       "email": "rest@gmail.com",
       "password": "222222",
       "role": "user"
+    },
+    {
+      "id": "a70b",
+      "name": "3mm",
+      "email": "test111@gmail.com",
+      "password": "22222222"
     }
   ]
 }

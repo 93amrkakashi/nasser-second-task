@@ -41,13 +41,13 @@ function FilterComponent() {
   }, [dispatch]);
 
   return (
-    <div className="mb-4 flex justify-start items-center gap-4">
-      <div>
+    <div className="mb-4 flex flex-col md:flex-row justify-start items-center gap-1 md:gap-4">
+      <div className="w-full px-4 md:px-1 mb-2 md:w-[40%]">
         <label className="mr-2">اختر نوع الفلتر : </label>
         <select
           value={filterType}
           onChange={handleFilterTypeChange}
-          className="px-4 border rounded"
+          className="px-1 md:px-4 border rounded bg-white w-[60%]"
         >
           <option value="">اختر نوع الفلتر</option>
           <option value="author">المؤلف</option>
@@ -55,15 +55,15 @@ function FilterComponent() {
         </select>
       </div>
 
-      <div>
+      <div className="w-full px-4 md:px-1 mb-2 md:w-[40%]">
         <label className="mr-2">
           {filterType === "author" ? "اختر المؤلف : " : "اختر الفئة : "}
         </label>
         <select
           value={selectedValue}
           onChange={handleValueChange}
-          className="px-4 border rounded"
-          disabled={!filterType || loading} // تعطيل إذا كان في حالة تحميل
+          className={`px-1 md:px-4 border rounded w-[60%] ${!filterType? "bg-gray-300": "bg-white" }  `}
+          disabled={!filterType || loading} 
         >
           <option value="">
             اختر {filterType === "author" ? "المؤلف" : "الفئة"}
@@ -86,7 +86,7 @@ function FilterComponent() {
       <button
         onClick={handleReset}
         className="p-2 bg-blue-700 text-white rounded"
-        disabled={loading} // تعطيل الزر إذا كان في حالة تحميل
+        disabled={loading} 
       >
         إلغاء الفلترة
       </button>

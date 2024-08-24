@@ -23,12 +23,7 @@ export default function BooksPage() {
     
   }, [books]);
 
-//  const filteredBooks = useMemo(() => {
-//    if (!filter.filterKey || !filter.filterValue) return books;
-//    return books.filter((book) =>
-//      book[filter.filterKey] === filter.filterValue
-//    );
-//  }, [books, filter]);
+
 
   return (
     <div className="w-full p-4">

@@ -1,8 +1,18 @@
 import React from 'react'
-import BooksPage from "../components/BooksPage"
+import BooksPage from "../components/BooksPage";
+import {Helmet} from "react-helmet-async"
 const Home = () => {
   return (
-    <BooksPage />
+<>
+<Helmet>
+<title>
+الصفحة الرئيسية
+</title>
+
+</Helmet>
+<BooksPage />
+</>
+    
   )
 }
 

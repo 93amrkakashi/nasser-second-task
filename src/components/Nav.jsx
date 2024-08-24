@@ -36,9 +36,9 @@ export default function NavBar() {
   }, [dropdownOpen]);
 
   return (
-    <nav className="w-full bg-gray-800 p-4 shadow-md fixed top-0 left-0 right-0 z-10">
-      <div dir="ltr" className="w-full px-4 flex justify-between items-center">
-        <div className="text-white text-lg font-bold">
+    <nav className="w-full bg-gray-800 p-2 shadow-md fixed top-0 left-0 right-0 z-10">
+      <div dir="ltr" className="w-full  flex justify-between items-center">
+        <div className="text-white text-sm md:text-lg font-bold">
           <Link
             to="/"
             className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out"
@@ -49,14 +49,14 @@ export default function NavBar() {
         <div className="flex w-[70%] justify-end items-center gap-4">
           <Link
             to="/"
-            className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out"
+            className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out font-bold"
           >
             الكتب
           </Link>
           {user && user.role === "admin" && (
             <Link
               to="/admin"
-              className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out"
+              className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out font-bold"
             >
               لوحة التحكم
             </Link>
@@ -81,7 +81,7 @@ export default function NavBar() {
                 <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 shadow-lg rounded-md">
                   <button
                     onClick={handleLogout}
-                    className="text-center block px-4 py-2 w-full hover:bg-gray-100"
+                    className="text-center block px-4 py-2 w-full hover:bg-gray-100 font-bold"
                   >
                     تسجيل الخروج
                   </button>
@@ -91,7 +91,7 @@ export default function NavBar() {
           ) : (
             <Link
               to="/login"
-              className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out"
+              className="text-white hover:text-gray-300 transition-colors duration-300 ease-in-out font-bold"
             >
               تسجيل الدخول
             </Link>

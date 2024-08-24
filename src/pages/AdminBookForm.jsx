@@ -10,7 +10,7 @@ import {
   fetchBookById,
 } from "../libs/services/slices/booksSlice";
 import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
-
+import {Helmet} from "react-helmet-async"
 
 const AdminBookForm = () => {
   const dispatch = useDispatch();
@@ -94,6 +94,15 @@ const AdminBookForm = () => {
 
   return (
     <div className="bg-white p-4 flex flex-col justify-center items-center">
+<Helmet>
+<title>
+{bookId? "تعديل بيانات الكتاب"
+:
+"إضافة كتاب جديد"
+}
+</title>
+
+</Helmet>
       <h2 className="text-2xl text-center font-bold mb-6">
         {bookId ? "تعديل بيانات الكتاب" : "اضافة كتاب جديد"}
       </h2>

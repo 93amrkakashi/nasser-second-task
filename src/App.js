@@ -7,7 +7,7 @@ function App() {
     <div dir="rtl" className="App">
       <Navbaar />
       <div className="mt-[75px] w-full ">
-      <AppRoutes />
+        <AppRoutes />
       </div>
     </div>
   );

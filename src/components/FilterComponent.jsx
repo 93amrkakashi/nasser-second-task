@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterBooks ,fetchBooks} from "../libs/services/slices/booksSlice";
+import { filterBooks, fetchBooks } from "../libs/services/slices/booksSlice";
 
 function FilterComponent() {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books.books); 
+  const books = useSelector((state) => state.books.books);
 
-  const loading = useSelector((state) => state.books.loading); 
+  const loading = useSelector((state) => state.books.loading);
 
   const [filterType, setFilterType] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
@@ -62,8 +62,10 @@ function FilterComponent() {
         <select
           value={selectedValue}
           onChange={handleValueChange}
-          className={`px-1 md:px-4 border rounded w-[60%] ${!filterType? "bg-gray-300": "bg-white" }  `}
-          disabled={!filterType || loading} 
+          className={`px-1 md:px-4 border rounded w-[60%] ${
+            !filterType ? "bg-gray-300" : "bg-white"
+          }  `}
+          disabled={!filterType || loading}
         >
           <option value="">
             اختر {filterType === "author" ? "المؤلف" : "الفئة"}
@@ -86,14 +88,12 @@ function FilterComponent() {
       <button
         onClick={handleReset}
         className="p-2 bg-blue-700 text-white rounded"
-        disabled={loading} 
+        disabled={loading}
       >
         إلغاء الفلترة
       </button>
-
     </div>
   );
 }
 
 export default React.memo(FilterComponent);
-

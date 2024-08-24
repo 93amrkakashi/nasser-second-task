@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
@@ -7,10 +7,9 @@ import { fetchBooks } from "../libs/services/slices/booksSlice";
 
 export default function BooksPage() {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books.books); 
+  const books = useSelector((state) => state.books.books);
 
-  const loading = useSelector((state) => state.books.loading); 
-
+  const loading = useSelector((state) => state.books.loading);
 
   const location = useLocation();
   const isAdminPage = location.pathname === "/admin";
@@ -19,11 +18,7 @@ export default function BooksPage() {
     dispatch(fetchBooks());
   }, [dispatch]);
 
-  useEffect(() => {
-    
-  }, [books]);
-
-
+  useEffect(() => {}, [books]);
 
   return (
     <div className="w-full p-4">
@@ -48,4 +43,3 @@ export default function BooksPage() {
     </div>
   );
 }
-

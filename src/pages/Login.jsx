@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signinUser } from "../libs/services/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,20 +6,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
-import {Helmet} from "react-helmet-async"
+import { Helmet } from "react-helmet-async";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
-  const { user, loading, error } = useSelector((state) => state.auth);
-
+  const { loading, error } = useSelector((state) => state.auth);
 
   const schema = useMemo(() => {
     return yup.object().shape({
       email: yup.string().email("الايميل غير صالح").required("الايميل مطلوب"),
-      password: yup.string()
+      password: yup
+        .string()
         .min(8, "كلمة السر يجب أن تكون على الأقل 8 حروف")
         .max(32, "كلمة السر لا يمكن أن تتجاوز 32 حرفًا")
         .required("كلمة السر مطلوبة"),
@@ -35,12 +34,11 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-
-const onSubmitHandler = useCallback(
+  const onSubmitHandler = useCallback(
     async (data) => {
       try {
         await dispatch(signinUser(data)).unwrap();
-        showSuccessToast("تم تسجيل الدخول بنجاح!")
+        showSuccessToast("تم تسجيل الدخول بنجاح!");
         reset();
         navigate("/");
       } catch (err) {
@@ -50,22 +48,20 @@ const onSubmitHandler = useCallback(
     [dispatch, reset, navigate]
   );
 
-
-
   return (
     <div className="bg-white p-4 flex flex-col justify-center items-center">
-<Helmet>
-<title>
-تسجيل الدخول
-</title>
-
-</Helmet>
+      <Helmet>
+        <title>تسجيل الدخول</title>
+      </Helmet>
       {loading ? (
         <div>جارٍ التحميل...</div>
       ) : (
         <>
           <h2 className="text-2xl text-center font-bold mb-6">تسجيل الدخول</h2>
-          <form className="w-[90%] rounded-lg p-2 min-h-[40vh] mt-4 shadow-lg md:w-[60%] mx-auto flex flex-col justify-around items-center" onSubmit={handleSubmit(onSubmitHandler)}>
+          <form
+            className="w-[90%] rounded-lg p-2 min-h-[40vh] mt-4 shadow-lg md:w-[60%] mx-auto flex flex-col justify-around items-center"
+            onSubmit={handleSubmit(onSubmitHandler)}
+          >
             <div className="mb-4 w-full">
               <label className="block text-sm font-medium text-gray-700">
                 البريد الإلكتروني
@@ -120,4 +116,3 @@ const onSubmitHandler = useCallback(
     </div>
   );
 }
-

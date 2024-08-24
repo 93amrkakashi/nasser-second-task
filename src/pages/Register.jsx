@@ -6,23 +6,31 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
-import {Helmet} from "react-helmet-async"
-
+import { Helmet } from "react-helmet-async";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  
 
   const { user, loading, error } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
-  
 
   const schema = useMemo(() => {
     return yup.object().shape({
-      name: yup.string().min(3, "الاسم يجب أن يكون على الأقل 3 أحرف").max(12, "الاسم لا يمكن أن يتجاوز 12 حرفًا").required("الاسم مطلوب"),
-      email: yup.string().email("الايميل غير صالح").required("البريد الإلكتروني مطلوب"),
-      password: yup.string().min(8, "كلمة المرور يجب أن تكون على الأقل 8 أحرف").max(32, "كلمة المرور لا يمكن أن تتجاوز 32 حرفًا").required("كلمة المرور مطلوبة"),
+      name: yup
+        .string()
+        .min(3, "الاسم يجب أن يكون على الأقل 3 أحرف")
+        .max(12, "الاسم لا يمكن أن يتجاوز 12 حرفًا")
+        .required("الاسم مطلوب"),
+      email: yup
+        .string()
+        .email("الايميل غير صالح")
+        .required("البريد الإلكتروني مطلوب"),
+      password: yup
+        .string()
+        .min(8, "كلمة المرور يجب أن تكون على الأقل 8 أحرف")
+        .max(32, "كلمة المرور لا يمكن أن تتجاوز 32 حرفًا")
+        .required("كلمة المرور مطلوبة"),
     });
   }, []);
 
@@ -35,12 +43,11 @@ export default function Signup() {
     resolver: yupResolver(schema),
   });
 
-
-const onSubmitHandler = useCallback(
+  const onSubmitHandler = useCallback(
     async (data) => {
       try {
         await dispatch(signupUser(data)).unwrap();
-        showSuccessToast("تم انشاء الحساب بنجاح!")
+        showSuccessToast("تم انشاء الحساب بنجاح!");
         reset();
         navigate("/");
       } catch (err) {
@@ -58,14 +65,14 @@ const onSubmitHandler = useCallback(
 
   return (
     <div className="bg-white p-4 flex flex-col justify-center items-center">
-<Helmet>
-<title>
-انشاء حساب جديد
-</title>
-
-</Helmet>
+      <Helmet>
+        <title>انشاء حساب جديد</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-6">إنشاء حساب جديد</h2>
-      <form className="w-[90%] rounded-lg p-2 min-h-[50vh] mt-4 shadow-lg md:w-[60%] mx-auto flex flex-col justify-around items-center" onSubmit={handleSubmit(onSubmitHandler)}>
+      <form
+        className="w-[90%] rounded-lg p-2 min-h-[50vh] mt-4 shadow-lg md:w-[60%] mx-auto flex flex-col justify-around items-center"
+        onSubmit={handleSubmit(onSubmitHandler)}
+      >
         <div className="mb-4 w-full">
           <label className="block text-sm font-medium text-gray-700">
             الاسم
@@ -102,7 +109,9 @@ const onSubmitHandler = useCallback(
             className="mt-1 block w-full p-2 border border-gray-300 rounded"
           />
           {errors.password && (
-            <p className="text-red-500 text-xs mt-1">{errors.password?.message}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {errors.password?.message}
+            </p>
           )}
         </div>
         <button
@@ -123,4 +132,3 @@ const onSubmitHandler = useCallback(
     </div>
   );
 }
-

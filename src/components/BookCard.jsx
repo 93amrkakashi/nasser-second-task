@@ -4,30 +4,25 @@ import { deleteBook } from "../libs/services/slices/booksSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
 
-
 export default function BookCard({ book }) {
   const user = useSelector((state) => state.auth.user);
-  const error = useSelector((state) => state.books.error); 
   const dispatch = useDispatch();
   const location = useLocation();
   const isAdminPage = location.pathname === "/admin";
 
-  const handleDelete = useCallback(
-    async (id, title) => {
-      try {
- const confirmDelete = window.confirm(`هل تريد حقًا حذف كتاب  "${title}"؟`);
-    if (confirmDelete) {
-      dispatch(deleteBook(id));
-showSuccessToast("تم حذف الكتاب بنجاح");
-    }
-      } catch (err) {
-        showErrorToast("حدث خطأ أثناء حذف الكتاب");
+  const handleDelete = useCallback(async (id, title) => {
+    try {
+      const confirmDelete = window.confirm(
+        `هل تريد حقًا حذف كتاب  "${title}"؟`
+      );
+      if (confirmDelete) {
+        dispatch(deleteBook(id));
+        showSuccessToast("تم حذف الكتاب بنجاح");
       }
-    },
-    []
-  );
-
-
+    } catch (err) {
+      showErrorToast("حدث خطأ أثناء حذف الكتاب");
+    }
+  }, [dispatch]);
 
   return (
     <div className="border rounded-lg shadow bg-white text-text">
@@ -44,8 +39,8 @@ showSuccessToast("تم حذف الكتاب بنجاح");
           {book?.title}
         </h2>
         <div className="w-full px-2 flex justify-between items-center">
-           <p className="text-sm text-gray-700">{book?.category}</p>
-<p className="text-sm text-gray-700 mb-1">{book?.author}</p>
+          <p className="text-sm text-gray-700">{book?.category}</p>
+          <p className="text-sm text-gray-700 mb-1">{book?.author}</p>
         </div>
       </div>
       {user && user.role === "admin" && isAdminPage && (

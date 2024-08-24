@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,14 +10,12 @@ import {
   fetchBookById,
 } from "../libs/services/slices/booksSlice";
 import { showSuccessToast, showErrorToast } from "../libs/toastNotifications";
-import {Helmet} from "react-helmet-async"
+import { Helmet } from "react-helmet-async";
 
 const AdminBookForm = () => {
   const dispatch = useDispatch();
   const { id: bookId } = useParams();
   const navigate = useNavigate();
-  const loading = useSelector((state) => state.books.loading); 
-  const error = useSelector((state) => state.books.error); 
   const schema = useMemo(
     () =>
       yup.object().shape({
@@ -94,15 +92,9 @@ const AdminBookForm = () => {
 
   return (
     <div className="bg-white p-4 flex flex-col justify-center items-center">
-<Helmet>
-<title>
-{bookId? "تعديل بيانات الكتاب"
-:
-"إضافة كتاب جديد"
-}
-</title>
-
-</Helmet>
+      <Helmet>
+        <title>{bookId ? "تعديل بيانات الكتاب" : "إضافة كتاب جديد"}</title>
+      </Helmet>
       <h2 className="text-2xl text-center font-bold mb-6">
         {bookId ? "تعديل بيانات الكتاب" : "اضافة كتاب جديد"}
       </h2>

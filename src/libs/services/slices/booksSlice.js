@@ -52,7 +52,7 @@ const booksSlice = createSlice({
   initialState: {
     books: [],
     error: null,
-    loading: false, 
+    loading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -89,7 +89,9 @@ const booksSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(updateBook.fulfilled, (state, action) => {
-      const index = state.books.findIndex((book) => book.id === action.payload.id);
+      const index = state.books.findIndex(
+        (book) => book.id === action.payload.id
+      );
       if (index !== -1) {
         state.books[index] = action.payload;
       }
@@ -120,7 +122,9 @@ const booksSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchBookById.fulfilled, (state, action) => {
-      const index = state.books.findIndex((book) => book.id === action.payload.id);
+      const index = state.books.findIndex(
+        (book) => book.id === action.payload.id
+      );
       if (index !== -1) {
         state.books[index] = action.payload;
       } else {
@@ -151,4 +155,3 @@ const booksSlice = createSlice({
 });
 
 export default booksSlice.reducer;
-
